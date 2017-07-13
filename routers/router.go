@@ -24,6 +24,7 @@ func init() {
 		beego.NSRouter("/addTag", &admin.AddTagController{}),
 		beego.NSRouter("/deleteTag", &admin.DeleteTagController{}),
 		beego.NSRouter("/addArticle", &admin.AddArticleController{}),
+		beego.NSRouter("/articleList", &admin.ArticleListController{}),
 	)
 
 	beego.AddNamespace(ns)

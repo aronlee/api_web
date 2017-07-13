@@ -71,4 +71,16 @@ func AddArticle(article Article, tagIds []int, user *User) error {
 	return nil
 }
 
-//
+// ArticleList 分页查询 article
+func ArticleList(pageNo, pageSize int) ([]*Article, int64, error) {
+	var (
+		articles []*Article
+	)
+	offset := (pageNo - 1) * pageSize
+	o := orm.NewOrm()
+	count, err := o.QueryTable(new(Article)).Limit(pageSize, offset).All(&articles)
+	if err != nil {
+		return nil, 0, err
+	}
+	return articles, count, nil
+}
