@@ -78,7 +78,12 @@ func ArticleList(pageNo, pageSize int) ([]*Article, int64, error) {
 	)
 	offset := (pageNo - 1) * pageSize
 	o := orm.NewOrm()
-	count, err := o.QueryTable(new(Article)).Limit(pageSize, offset).All(&articles)
+	qs := o.QueryTable(new(Article))
+	count, err := qs.Count()
+	if err != nil {
+		return nil, 0, err
+	}
+	_, err = qs.Limit(pageSize, offset).All(&articles)
 	if err != nil {
 		return nil, 0, err
 	}
