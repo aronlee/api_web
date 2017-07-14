@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `user_login` (
 
 CREATE TABLE IF NOT EXISTS `article` (
   `a_i_d` int unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL COMMENT '作者名',
   `title` varchar(127) NOT NULL DEFAULT '' COMMENT '文章标题',
   `content` mediumtext NOT NULL COMMENT '正文(带html)',
   `txt` mediumtext NOT NULL COMMENT '正文(纯文本)',

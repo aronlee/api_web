@@ -12,6 +12,7 @@ func init() {
 type Article struct {
 	AID        int       `json:"a_i_d" orm:"pk;auto"`
 	UID        int       `json:"uid"`
+	Username   string    `json:"username" orm:"size(20)"`
 	Title      string    `json:"title" orm:"size(127)"`
 	Content    string    `json:"content"`
 	Txt        string    `json:"txt"`
@@ -39,6 +40,7 @@ func AddArticle(article Article, tagIds []int, user *User) error {
 	)
 
 	article.UID = user.UID
+	article.Username = user.Username
 	article.CreateTime = time.Now()
 	article.UpdateTime = time.Now()
 
