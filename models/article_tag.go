@@ -17,3 +17,15 @@ func init() {
 func (*ArticleTag) TableName() string {
 	return "article_tag"
 }
+
+// GetTagsByArticle 根据articleId获取所有的article tag 列数据
+func GetTagsByArticle(aid int) ([]*ArticleTag, error) {
+	var articleTags []*ArticleTag
+	o := orm.NewOrm()
+	qs := o.QueryTable(new(ArticleTag))
+	_, err := qs.Filter("a_i_d", aid).All(&articleTags)
+	if err != nil {
+		return nil, err
+	}
+	return articleTags, nil
+}

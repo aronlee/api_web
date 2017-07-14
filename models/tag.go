@@ -4,6 +4,8 @@ import (
 	"errors"
 	"time"
 
+	"strings"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
@@ -87,6 +89,31 @@ func TagsAll() ([]*Tag, int64, error) {
 		return nil, 0, err
 	}
 	return tags, count, nil
+}
+
+// GetTagByIds 查询所有tags通过id slice
+func GetTagByIds(ids []int) ([]*Tag, error) {
+	var (
+		tags []*Tag
+	)
+	o := orm.NewOrm()
+	// qs := o.QueryTable(new(Tag))
+	if len(ids) < 1 {
+		return tags, nil
+	}
+	var tems []string
+	for range ids {
+		tems = append(tems, "?")
+	}
+	tms := strings.Join(tems, ", ")
+	tms = "SELECT t_i_d, u_i_d, name, create_time FROM tag WHERE id IN (" + tms + ")"
+	beego.Info(tms)
+	_, err := o.Raw(tms, ids).QueryRows(&tags)
+	// _, err := qs.Filter("tag__t_i_d__in", ids).All(&tags)
+	if err != nil {
+		return nil, err
+	}
+	return tags, nil
 }
 
 func existTag(t Tag) bool {

@@ -9,24 +9,29 @@ package routers
 
 import (
 	"api_web/controllers/admin"
+	"api_web/controllers/home"
 	"api_web/controllers/user"
 
 	"github.com/astaxie/beego"
 )
 
 func init() {
-	ns := beego.NewNamespace("/user",
+	userNS := beego.NewNamespace("/user",
 		beego.NSRouter("/login", &user.LoginController{}),
 		beego.NSRouter("/regist", &user.RegistController{}),
 	)
-	admin := beego.NewNamespace("/admin",
+	adminNS := beego.NewNamespace("/admin",
 		beego.NSRouter("/tagList", &admin.TagListController{}),
 		beego.NSRouter("/addTag", &admin.AddTagController{}),
 		beego.NSRouter("/deleteTag", &admin.DeleteTagController{}),
 		beego.NSRouter("/addArticle", &admin.AddArticleController{}),
 		beego.NSRouter("/articleList", &admin.ArticleListController{}),
 	)
+	homeNS := beego.NewNamespace("/home",
+		beego.NSRouter("/articleList", &home.ArticleListController{}),
+	)
 
-	beego.AddNamespace(ns)
-	beego.AddNamespace(admin)
+	beego.AddNamespace(userNS)
+	beego.AddNamespace(adminNS)
+	beego.AddNamespace(homeNS)
 }
