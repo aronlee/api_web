@@ -29,6 +29,7 @@ func init() {
 	)
 	homeNS := beego.NewNamespace("/home",
 		beego.NSRouter("/articleList", &home.ArticleListController{}),
+		beego.NSRouter("/articleDetail", &home.ArticleDetailController{}),
 	)
 
 	beego.AddNamespace(userNS)

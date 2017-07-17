@@ -166,3 +166,50 @@ func HomeArticleList(pageNo, pageSize int) ([]*ArticleIncludeTag, int64, error) 
 	}
 	return articleIncludeTag, count, nil
 }
+
+// ArticleDetail 根据id获取文章详情
+func ArticleDetail(id int) (*ArticleIncludeTag, error) {
+	var (
+		ids         []int
+		articleTags []*ArticleTag
+		tags        []*Tag
+	)
+	article := Article{
+		AID: id,
+	}
+	o := orm.NewOrm()
+	err := o.Read(&article, "AID")
+	if err != nil {
+		beego.Error(err)
+		return nil, err
+	}
+	articleTags, err = GetTagsByArticle(article.AID)
+	for _, a := range articleTags {
+		beego.Info(a.TID)
+		ids = append(ids, a.TID)
+	}
+	tags, err = GetTagByIds(ids)
+	if err != nil {
+		beego.Error(err)
+		return nil, err
+	}
+
+	articleIncludeTag := &ArticleIncludeTag{
+		AID:        article.AID,
+		UID:        article.UID,
+		Username:   article.Username,
+		Title:      article.Title,
+		Content:    article.Content,
+		Txt:        article.Txt,
+		CSS:        article.CSS,
+		ViewNum:    article.ViewNum,
+		CommentNum: article.CommentNum,
+		LikeNum:    article.LikeNum,
+		Status:     article.Status,
+		CreateTime: article.CreateTime,
+		UpdateTime: article.UpdateTime,
+		Tags:       tags,
+	}
+
+	return articleIncludeTag, nil
+}
