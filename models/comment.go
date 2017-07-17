@@ -1,7 +1,7 @@
 package models
 
-import "time"
 import "github.com/astaxie/beego/orm"
+import "time"
 
 // Comment 评论
 type Comment struct {

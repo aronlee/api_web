@@ -62,7 +62,7 @@ func CreateUser(u User, pwd string) (*UserLogin, error) {
 	o.Begin()
 	user := User{
 		Username:   u.Username,
-		Email:      "11",
+		Email:      "112",
 		Status:     0,
 		IsThird:    0,
 		IsRoot:     0,

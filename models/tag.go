@@ -106,7 +106,7 @@ func GetTagByIds(ids []int) ([]*Tag, error) {
 		tems = append(tems, "?")
 	}
 	tms := strings.Join(tems, ", ")
-	tms = "SELECT t_i_d, u_i_d, name, create_time FROM tag WHERE id IN (" + tms + ")"
+	tms = "SELECT t_i_d, u_i_d, name, create_time FROM tag WHERE t_i_d IN (" + tms + ")"
 	beego.Info(tms)
 	_, err := o.Raw(tms, ids).QueryRows(&tags)
 	// _, err := qs.Filter("tag__t_i_d__in", ids).All(&tags)
