@@ -20,6 +20,9 @@ func init() {
 		beego.NSRouter("/login", &user.LoginController{}),
 		beego.NSRouter("/regist", &user.RegistController{}),
 	)
+	oauthNS := beego.NewNamespace("/oauth",
+		beego.NSRouter("/oauth", &user.OauthController{}),
+	)
 	adminNS := beego.NewNamespace("/admin",
 		beego.NSRouter("/tagList", &admin.TagListController{}),
 		beego.NSRouter("/addTag", &admin.AddTagController{}),
@@ -31,8 +34,8 @@ func init() {
 		beego.NSRouter("/articleList", &home.ArticleListController{}),
 		beego.NSRouter("/articleDetail", &home.ArticleDetailController{}),
 	)
-
 	beego.AddNamespace(userNS)
+	beego.AddNamespace(oauthNS)
 	beego.AddNamespace(adminNS)
 	beego.AddNamespace(homeNS)
 }
